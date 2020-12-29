@@ -3,7 +3,8 @@
  Created:	12/26/2020 9:48:32 AM
  Author:	Wesley Caldwell
 */
-#include <Servo.h>
+
+#include <ESP32Servo.h>
 Servo ESC;     // create servo object to control the ESC
 
 
@@ -53,7 +54,17 @@ void loop() {
 				{
 					int pinNum = x.substring(2, 4).toInt(); //get the first two characters - pin number
 					String actionType = x.substring(4, 5);
-					if (actionType == "S") {
+					Serial.print("Running Action: ");
+					Serial.print(actionType);
+					Serial.print(" On Pin: ");
+					Serial.println(pinNum);
+					if (actionType == "I") {
+						ESC.attach(pinNum, 1000, 2000); // (pin, min pulse width, max pulse width in microseconds) 
+						Serial.print("Attached Pin: ");
+						Serial.print(pinNum);
+						Serial.println("to ESC - 1000 - 2000 pwm");
+					}
+					else if (actionType == "S") {
 						String executeValue = x.substring(5, 9); //get the four characters - 3 - 7
 						Serial.print("Setting Pin:");
 						Serial.print(pinNum);
@@ -61,7 +72,7 @@ void loop() {
 						Serial.println(executeValue);
 
 						int potValue = executeValue.toInt();   // reads the value of the potentiometer (value between 0 and 1023)
-						potValue = map(potValue, 0, 1023, 0, 180);   // scale it to use it with the servo library (value between 0 and 180)
+						potValue = map(potValue, 0, 9999, 0, 180);   // scale it to use it with the servo library (value between 0 and 180)
 						ESC.write(potValue);    // Send the signal to the ESC
 					}
 				}

@@ -19,6 +19,7 @@
     <None Include="src\arduino folders read me.txt">
       <Filter>Misc Files</Filter>
     </None>
+    <None Include="..\..\wesleyscaldwell\BerryHomeApi\.gitignore" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.ArduinoDroneMotorService.vsarduino.h">
